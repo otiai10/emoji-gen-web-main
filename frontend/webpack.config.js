@@ -120,6 +120,8 @@ module.exports = {
     minimizer: [
 			new TerserPlugin({
         extractComments: false,
+        // 旧キャッシュのMD4を使わず、Node.js 26で圧縮を実行する。
+        cache: false,
       }),
       new OptimizeCSSAssetsPlugin({
         parallel: true,

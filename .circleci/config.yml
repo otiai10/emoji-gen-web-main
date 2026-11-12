@@ -3,10 +3,20 @@ jobs:
   build:
     working_directory: ~/workspace
     docker:
-      - image: emojigen/node-py23:node12.9.0-py2.7.16-py3.7.4
+      - image: cimg/python:3.7.17-node
     environment:
+      PYENV_VERSION: 3.7.17
     steps:
       - checkout
+      - run:
+          name: Node.js修正版を準備
+          command: |
+            set -eu
+            cd /tmp
+            curl -fsSLO https://nodejs.org/dist/v26.13.1/node-v26.13.1-linux-x64.tar.xz
+            curl -fsSLO https://nodejs.org/dist/v26.13.1/SHASUMS256.txt
+            grep ' node-v26.13.1-linux-x64.tar.xz$' SHASUMS256.txt | sha256sum --check -
+            sudo tar -xJf node-v26.13.1-linux-x64.tar.xz --strip-components=1 -C /usr/local
       - run:
           name: System information
           command: |
@@ -16,9 +26,9 @@ jobs:
             echo "Yarn v$(yarn --version)"
       - restore_cache:
           keys:
-            - v1-{{ arch }}-{{ checksum "server/requirements.txt" }}-{{ checksum "frontend/yarn.lock" }}
-            - v1-{{ arch }}-{{ checksum "server/requirements.txt" }}
-            - v1-{{ arch }}
+            - v2-node26-{{ arch }}-{{ checksum "server/requirements.txt" }}-{{ checksum "frontend/yarn.lock" }}
+            - v2-node26-{{ arch }}-{{ checksum "server/requirements.txt" }}
+            - v2-node26-{{ arch }}
       - run:
           name: Install dependencies (Python)
           command: |
@@ -42,7 +52,7 @@ jobs:
               ./common/script/is-git-dirty.sh
             fi
       - save_cache:
-          key: v1-{{ arch }}-{{ checksum "server/requirements.txt" }}-{{ checksum "frontend/yarn.lock" }}
+          key: v2-node26-{{ arch }}-{{ checksum "server/requirements.txt" }}-{{ checksum "frontend/yarn.lock" }}
           paths:
             - ~/workspace/frontend/node_modules
             - ~/.cache/yarn/
