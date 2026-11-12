@@ -43,7 +43,6 @@
     "foreman": "^3.0.1",
     "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.0",
@@ -51,9 +50,10 @@
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.36.1",
-    "webpack-cli": "^3.0.3",
-    "yaml-loader": "^0.6.0"
+    "webpack": "^4.47.0",
+    "webpack-cli": "^3.3.12",
+    "yaml-loader": "^0.6.0",
+    "sass": "1.107.1"
   },
   "author": {
     "name": "Emoji Generator",
